@@ -5,7 +5,7 @@ export default {
     if (url.pathname.startsWith('/api/')) {
       const targetUrl = `http://77.90.42.18{url.pathname}${url.search}`;
       
-      
+       
       const newHeaders = new Headers(request.headers);
       newHeaders.set("Host", "77.90.42.18");
  
