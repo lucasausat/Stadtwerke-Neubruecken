@@ -157,10 +157,10 @@
         const fragment = new URLSearchParams(window.location.hash.slice(1));
         const accessToken = fragment.get('access_token');
 
-     if (accessToken) {
+if (accessToken) {
     window.location.hash = ''; 
     
-    
+    // HIER GEÄNDERT: '/functions/check-login' zu '/check-login' machen
     fetch('/check-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
