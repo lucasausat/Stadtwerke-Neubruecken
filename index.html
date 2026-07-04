@@ -116,7 +116,8 @@
             <h3>Vorteile unserer Fraktion</h3>
             <ul>
                 <li><strong>Aktiver Funkdienst:</strong> Koordinierte Eins&auml;tze &uuml;ber Sprache.</li>
-                <li><strong>Eigener Fuhrrpark:</strong> Zugriff auf spezielle Werkstatt und Reparaturfahrzeuge im Spiel.</li>
+                <li><strong>Eigener Fuhrpark:</strong> Zugriff auf spezielle Werkstatt und Reparaturfahrzeuge im Spiel.</li>
+                <li><strong>Gutes Teamplay:</strong> Enge Zusammenarbeit mit der Polizei und dem Rettungsdienst.</li>
                 <li><strong>Gutes Teamplay:</strong> Enge Zusammenarbeit mit der Polizei und dem Rettungsdienst.</li>
             </ul>
         </div>
@@ -157,27 +158,27 @@
         const fragment = new URLSearchParams(window.location.hash.slice(1));
         const accessToken = fragment.get('access_token');
 
-if (accessToken) {
-    window.location.hash = ''; 
-    
-    fetch('/check-login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token: accessToken })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.status === "success") {
-            loginBtn.style.display = 'none';
-            userInfo.textContent = `Eingeloggt als: ${data.username}`;
-            userInfo.style.display = 'inline';
-    
-            console.log("Rollen des Nutzers vom Server:", data.roles);
+        if (accessToken) {
+            window.location.hash = ''; 
+            
+            // GEÄNDERT: Korrekter Pfad für die _worker.js Routing-Logik
+            fetch('/check-login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token: accessToken })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === "success") {
+                    loginBtn.style.display = 'none';
+                    userInfo.textContent = `Eingeloggt als: ${data.username}`;
+                    userInfo.style.display = 'inline';
+            
+                    console.log("Rollen des Nutzers vom Server:", data.roles);
+                }
+            })
+            .catch(err => console.error("Fehler bei der Kommunikation mit dem Bot:", err));
         }
-    })
-    .catch(err => console.error("Fehler bei der Kommunikation mit dem Bot:", err));
-}
-    
     </script>
 </body>
 </html>
