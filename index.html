@@ -160,9 +160,10 @@ const fragment = new URLSearchParams(window.location.hash.slice(1));
 const accessToken = fragment.get('access_token');
 
 if (accessToken) {
+    // Löscht das Token aus der Adresszeile (lässt nur das # übrig)
     window.location.hash = ''; 
     
-    // Wir funken den Bot jetzt DIREKT über seine IP und den Port an!
+    // Wir funken den Bot jetzt DIREKT über seine IP an!
     fetch('http://77.90.42.18:1025/api/check-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
