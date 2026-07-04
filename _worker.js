@@ -3,11 +3,11 @@ export default {
     const url = new URL(request.url);
 
     if (url.pathname.startsWith('/api/')) {
-      const targetUrl = `http://77.90.42.18:1025${url.pathname}${url.search}`;
+      const targetUrl = `http://77.90.42.18{url.pathname}${url.search}`;
       
-      // Kopiere die Header und passe den Host an
+      
       const newHeaders = new Headers(request.headers);
-      newHeaders.set("Host", "77.90.42.18:1025");
+      newHeaders.set("Host", "77.90.42.18");
  
       const newRequest = new Request(targetUrl, {
         method: request.method,
