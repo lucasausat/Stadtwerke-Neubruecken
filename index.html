@@ -160,7 +160,7 @@
         if (accessToken) {
             window.location.hash = ''; 
             
-            fetch('http://77.90.42.18:1025:5000/api/check-login', {
+                fetch('http://77.90.42.18:1025/api/check-login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ token: accessToken })
