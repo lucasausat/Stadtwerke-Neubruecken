@@ -160,7 +160,6 @@
 if (accessToken) {
     window.location.hash = ''; 
     
-    // HIER GEÄNDERT: '/functions/check-login' zu '/check-login' machen
     fetch('/check-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
