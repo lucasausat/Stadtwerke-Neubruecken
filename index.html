@@ -155,30 +155,37 @@
 
         loginBtn.href = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=identify`;
 
-        const fragment = new URLSearchParams(window.location.hash.slice(1));
-        const accessToken = fragment.get('access_token');
 
-        if (accessToken) {
-            window.location.hash = ''; 
-            
-            // GEÄNDERT: Korrekter Pfad für die _worker.js Routing-Logik
-            fetch('/check-login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ token: accessToken })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status === "success") {
-                    loginBtn.style.display = 'none';
-                    userInfo.textContent = `Eingeloggt als: ${data.username}`;
-                    userInfo.style.display = 'inline';
-            
-                    console.log("Rollen des Nutzers vom Server:", data.roles);
-                }
-            })
-            .catch(err => console.error("Fehler bei der Kommunikation mit dem Bot:", err));
+const fragment = new URLSearchParams(window.location.hash.slice(1));
+const accessToken = fragment.get('access_token');
+
+if (accessToken) {
+    window.location.hash = ''; 
+    
+    // Wir funken den Bot jetzt DIREKT über seine IP und den Port an!
+    fetch('http://77.90.42.18:1025/api/check-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: accessToken })
+    })
+    .then(res => {
+        if (!res.ok) {
+            throw new Error(`Server antwortet mit Status: ${res.status}`);
         }
+        return res.json();
+    })
+    .then(data => {
+        if (data.status === "success") {
+            loginBtn.style.display = 'none';
+            userInfo.textContent = `Eingeloggt als: ${data.username}`;
+            userInfo.style.display = 'inline';
+    
+            console.log("Rollen des Nutzers vom Server:", data.roles);
+        }
+    })
+    .catch(err => console.error("Fehler bei der Kommunikation mit dem Bot:", err));
+}
+        
     </script>
 </body>
 </html>
