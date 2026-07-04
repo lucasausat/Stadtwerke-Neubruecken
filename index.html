@@ -157,11 +157,11 @@
         const fragment = new URLSearchParams(window.location.hash.slice(1));
         const accessToken = fragment.get('access_token');
 
-        if (accessToken) {
+     if (accessToken) {
     window.location.hash = ''; 
     
-    // WICHTIG: Hier darf KEINE IP-Adresse mehr stehen!
-    fetch('/functions/check-login', {
+    
+    fetch('/check-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: accessToken })
