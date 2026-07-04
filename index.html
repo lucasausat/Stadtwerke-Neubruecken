@@ -138,7 +138,7 @@
     </footer>
 
     <script>
-        // Lade-Animation entfernen
+        
         window.addEventListener('load', function() {
             const loader = document.getElementById('loader');
             setTimeout(function() {
@@ -146,11 +146,11 @@
             }, 1000);
         });
         
-        // Lucide Icons initialisieren
+     
         lucide.createIcons();
 
-        // Discord OAuth Login Setup
-        const clientId = '1519370251597250701'; 
+      
+        const clientId = '1490307263909335102'; 
         const redirectUri = encodeURIComponent(window.location.origin + window.location.pathname);
         const loginBtn = document.getElementById('loginBtn');
         const userInfo = document.getElementById('userInfo');
@@ -162,7 +162,7 @@
         const accessToken = fragment.get('access_token');
 
         if (accessToken) {
-            // Löscht das Token aus der Adresszeile für saubere Optik
+          
             window.location.hash = ''; 
 
 fetch('/api/check-login', {
