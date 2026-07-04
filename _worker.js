@@ -8,7 +8,7 @@ export default {
       // Kopiere die Header und passe den Host an
       const newHeaders = new Headers(request.headers);
       newHeaders.set("Host", "77.90.42.18:1025");
-
+ 
       const newRequest = new Request(targetUrl, {
         method: request.method,
         headers: newHeaders,
