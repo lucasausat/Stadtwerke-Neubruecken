@@ -1,53 +1,30 @@
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
     
-    if (url.pathname === "/check-login") {
+    if (url.pathname.startsWith('/api/')) {
       
-      if (request.method === "OPTIONS") {
-        return new Response(null, {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "POST, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type",
-          },
-        });
-      } 
-    
-
-      const botUrl = 'http://77.90.42.18:1025/api/check-login';
-      const body = await request.text();
+      const targetUrl = `http://77.90.42.18:1025${url.pathname}${url.search}`;
+      
+      
+      const newRequest = new Request(targetUrl, {
+        method: request.method,
+        headers: request.headers,
+        body: request.body
+      });
 
       try {
-        const modifiedRequest = new Request(botUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: body
-        });
-
-        const response = await fetch(modifiedRequest);
-        const responseText = await response.text();
-
-        return new Response(responseText, {
-          status: response.status,
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
-          }
-        });
-      } catch (error) {
-        return new Response(JSON.stringify({ error: "Bot nicht erreichbar", details: error.message }), {
+        return await fetch(newRequest);
+      } catch (err) {
+        return new Response(JSON.stringify({ error: "Bot-Server nicht erreichbar", details: err.message }), {
           status: 502,
-          headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+          headers: { "Content-Type": "application/json" }
         });
       }
     }
 
-    // Für alle anderen Seiten (index.html, regeln.html etc.) liefert Cloudflare die normalen Dateien aus
+    // Für alle normalen Seiten (index.html, CSS, etc.) Standard-Verhalten von Cloudflare Pages nutzen
     return env.ASSETS.fetch(request);
   },
 };
