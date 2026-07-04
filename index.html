@@ -158,25 +158,27 @@
         const accessToken = fragment.get('access_token');
 
         if (accessToken) {
-            window.location.hash = ''; 
-            
-            fetch('/api/check-login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ token: accessToken })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status === "success") {
-                    loginBtn.style.display = 'none';
-                    userInfo.textContent = `Eingeloggt als: ${data.username}`;
-                    userInfo.style.display = 'inline';
-            
-                    console.log("Rollen des Nutzers vom Server:", data.roles);
-                }
-            })
-            .catch(err => console.error("Fehler bei der Kommunikation mit dem Bot:", err));
+    window.location.hash = ''; 
+    
+    // WICHTIG: Hier darf KEINE IP-Adresse mehr stehen!
+    fetch('/functions/check-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: accessToken })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.status === "success") {
+            loginBtn.style.display = 'none';
+            userInfo.textContent = `Eingeloggt als: ${data.username}`;
+            userInfo.style.display = 'inline';
+    
+            console.log("Rollen des Nutzers vom Server:", data.roles);
         }
+    })
+    .catch(err => console.error("Fehler bei der Kommunikation mit dem Bot:", err));
+}
+    
     </script>
 </body>
 </html>
