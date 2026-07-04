@@ -164,19 +164,19 @@
         if (accessToken) {
             // Löscht das Token aus der Adresszeile für saubere Optik
             window.location.hash = ''; 
-            
-            // Anfrage geht relativ an deinen Cloudflare Worker (_worker.js)
-            fetch('/api/check-login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ token: accessToken })
-            })
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error(`Server antwortet mit Status: ${res.status}`);
-                }
-                return res.json();
-            })
+
+       fetch('/api/check-login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token: accessToken })
+})
+.then(res => {
+    if (!res.ok) {
+        throw new Error(`Server antwortet mit Status: ${res.status}`);
+    }
+    return res.json();
+})
+                    
             .then(data => {
                 if (data.status === "success") {
                     // UI aktualisieren bei erfolgreichem Login
