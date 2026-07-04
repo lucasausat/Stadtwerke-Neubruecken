@@ -165,7 +165,7 @@
             // Löscht das Token aus der Adresszeile für saubere Optik
             window.location.hash = ''; 
 
-       fetch('/api/check-login', {
+fetch('/api/check-login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ token: accessToken })
